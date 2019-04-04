@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\productRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\ProductCollection;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    /**
+   
+  
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -24,9 +28,20 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(productRequest $request)
     {
-        //
+        //return $request->all();
+        $product = new Product;
+        $product->name = $request->name;
+        $product->detail = $request->description;
+        $product->stock = $request->stock;
+        $product->price = $request->price;
+        $product->discount = $request->discount;
+        $product->user_id = $request->user_id;
+        $product->save();
+        return response([
+            'data' => new ProductResource($product)
+        ],Response::HTTP_CREATED);
     }
 
     /**

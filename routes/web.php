@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 Route::get('/TestPage', 'TestPageController@index')->name('TestPage');
 Route::post('/TestPage/store/data', 'TestPageController@store')->name('store.data');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
